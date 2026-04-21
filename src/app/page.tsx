@@ -17,8 +17,8 @@ function ArticleCard({ article }: { article: Article }) {
         )}
         <div className="p-6">
           <div className="flex items-center gap-3 mb-3">
-            <span className="bg-primary/10 text-primary text-xs font-heading font-semibold px-2 py-1 rounded uppercase tracking-wide">
-              {article.category}
+            <span className="bg-dark/10 text-dark text-xs font-heading font-semibold px-2 py-1 rounded uppercase tracking-wide">
+              {article.column}
             </span>
             <span className="text-muted text-xs">{article.date}</span>
           </div>
@@ -86,7 +86,7 @@ export default function HomePage() {
         <div className="flex items-center justify-between mb-10">
           <h2 className="font-heading font-bold text-3xl">最新文章</h2>
           <Link
-            href="/category/tech"
+            href="/category"
             className="text-primary font-heading text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all"
           >
             查看全部 <ArrowRight size={14} />
@@ -116,7 +116,7 @@ export default function HomePage() {
             获取每周精选科技商业资讯，洞察行业趋势
           </p>
           <Link
-            href="/dashboard"
+            href="/about"
             className="inline-flex items-center gap-2 bg-primary text-white px-8 py-3 rounded font-heading font-semibold hover:bg-primary/90 transition-colors"
           >
             立即注册 <ArrowRight size={16} />

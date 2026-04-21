@@ -11,7 +11,6 @@ export default function Header() {
     <header className="bg-dark text-white sticky top-0 z-50 shadow-lg">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <span className="text-primary font-heading font-bold text-2xl tracking-wider">
               LT
@@ -21,29 +20,24 @@ export default function Header() {
             </span>
           </Link>
 
-          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             <Link href="/" className="hover:text-primary transition-colors font-heading text-sm tracking-wide uppercase">
               首页
             </Link>
-            <Link href="/category/tech" className="hover:text-primary transition-colors font-heading text-sm tracking-wide uppercase">
-              科技
+            <Link href="/category/lab-to-market" className="hover:text-primary transition-colors font-heading text-sm tracking-wide uppercase">
+              Lab to Market
             </Link>
-            <Link href="/category/business" className="hover:text-primary transition-colors font-heading text-sm tracking-wide uppercase">
-              商业
+            <Link href="/category/long-term-short-term" className="hover:text-primary transition-colors font-heading text-sm tracking-wide uppercase">
+              Long Term & Short Term
+            </Link>
+            <Link href="/category/fast-slow" className="hover:text-primary transition-colors font-heading text-sm tracking-wide uppercase">
+              Fast & Slow
             </Link>
             <Link href="/about" className="hover:text-primary transition-colors font-heading text-sm tracking-wide uppercase">
-              关于
-            </Link>
-            <Link
-              href="/dashboard"
-              className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90 transition-colors font-heading text-sm tracking-wide"
-            >
-              用户中心
+              LT Launch Issue
             </Link>
           </nav>
 
-          {/* Mobile Menu Button */}
           <button
             className="md:hidden p-2"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -53,23 +47,22 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Mobile Nav */}
         {menuOpen && (
           <nav className="md:hidden pb-4 flex flex-col gap-3">
             <Link href="/" className="hover:text-primary py-1 font-heading text-sm tracking-wide uppercase" onClick={() => setMenuOpen(false)}>
               首页
             </Link>
-            <Link href="/category/tech" className="hover:text-primary py-1 font-heading text-sm tracking-wide uppercase" onClick={() => setMenuOpen(false)}>
-              科技
+            <Link href="/category/lab-to-market" className="hover:text-primary py-1 font-heading text-sm tracking-wide uppercase" onClick={() => setMenuOpen(false)}>
+              Lab to Market
             </Link>
-            <Link href="/category/business" className="hover:text-primary py-1 font-heading text-sm tracking-wide uppercase" onClick={() => setMenuOpen(false)}>
-              商业
+            <Link href="/category/long-term-short-term" className="hover:text-primary py-1 font-heading text-sm tracking-wide uppercase" onClick={() => setMenuOpen(false)}>
+              Long Term & Short Term
+            </Link>
+            <Link href="/category/fast-slow" className="hover:text-primary py-1 font-heading text-sm tracking-wide uppercase" onClick={() => setMenuOpen(false)}>
+              Fast & Slow
             </Link>
             <Link href="/about" className="hover:text-primary py-1 font-heading text-sm tracking-wide uppercase" onClick={() => setMenuOpen(false)}>
-              关于
-            </Link>
-            <Link href="/dashboard" className="bg-primary text-white px-4 py-2 rounded text-center font-heading text-sm tracking-wide" onClick={() => setMenuOpen(false)}>
-              用户中心
+              LT Launch Issue
             </Link>
           </nav>
         )}

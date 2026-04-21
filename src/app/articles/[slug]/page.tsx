@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllArticles, getArticleBySlug, markdownToHtml } from "@/lib/articles";
-import { ArrowLeft, Clock, Calendar, User } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, User, Tag } from "lucide-react";
 
 export async function generateStaticParams() {
   const articles = getAllArticles();
@@ -65,8 +65,11 @@ export default async function ArticlePage({
       {/* Article Header */}
       <div className="max-w-4xl mx-auto px-4 mt-8">
         <div className="flex items-center gap-4 mb-4">
-          <span className="bg-primary text-white text-xs font-heading font-semibold px-3 py-1 rounded uppercase tracking-wide">
-            {article.category}
+          <span className="bg-dark text-white text-xs font-heading font-semibold px-3 py-1 rounded uppercase tracking-wide">
+            {article.column}
+          </span>
+          <span className="flex items-center gap-1 text-muted text-xs">
+            <Tag size={12} /> {article.category}
           </span>
         </div>
         <h1 className="font-heading font-bold text-3xl md:text-5xl mb-6 leading-tight">
@@ -101,7 +104,7 @@ export default async function ArticlePage({
           </h3>
           <p className="text-white/70 mb-6">订阅获取更多科技商业资讯</p>
           <Link
-            href="/dashboard"
+            href="/about"
             className="inline-block bg-primary text-white px-6 py-3 rounded font-heading font-semibold hover:bg-primary/90 transition-colors"
           >
             加入我们
