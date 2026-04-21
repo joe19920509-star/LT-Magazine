@@ -116,10 +116,10 @@ export default function AboutPage() {
           </h2>
           <div className="space-y-3 text-white/80 mb-6">
             <p>
-              <strong className="text-white">商务合作：</strong> business@ltmagazine.com
+              <strong className="text-white">商务合作：</strong> joe19920509@gmail.com
             </p>
             <p>
-              <strong className="text-white">投稿邮箱：</strong> editor@ltmagazine.com
+              <strong className="text-white">投稿邮箱：</strong> joe19920509@gmail.com
             </p>
             <p>
               <strong className="text-white">网址：</strong> LTMagazine.com
