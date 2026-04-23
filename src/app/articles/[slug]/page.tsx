@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllArticles, getArticleBySlug, markdownToHtml } from "@/lib/articles";
 import { ArrowLeft, Clock, Calendar, User, Tag } from "lucide-react";
+import { ContentGate } from "@/components/ContentGate";
 
 export async function generateStaticParams() {
   const articles = getAllArticles();
@@ -33,9 +34,15 @@ export default async function ArticlePage({
   const article = getArticleBySlug(slug);
   if (!article) notFound();
 
-  const content = article.content
+  const fullContent = article.content
     ? await markdownToHtml(article.content)
     : article.excerpt;
+
+  // 生成预览内容（前 300 字或前 2 段）
+  const previewText = article.content 
+    ? article.content.split(/\n\n/).slice(0, 2).join('\n\n')
+    : article.excerpt;
+  const previewContent = await markdownToHtml(previewText);
 
   return (
     <div className="min-h-screen bg-light">
@@ -90,10 +97,7 @@ export default async function ArticlePage({
 
       {/* Article Body */}
       <div className="max-w-4xl mx-auto px-4 py-10">
-        <div
-          className="article-content"
-          dangerouslySetInnerHTML={{ __html: content }}
-        />
+        <ContentGate previewContent={previewContent} fullContent={fullContent} />
       </div>
 
       {/* CTA */}

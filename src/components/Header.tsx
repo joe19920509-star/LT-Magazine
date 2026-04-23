@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { AuthButton } from "@/components/AuthButton";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -38,13 +39,16 @@ export default function Header() {
             </Link>
           </nav>
 
-          <button
-            className="md:hidden p-2"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="flex items-center gap-4">
+            <AuthButton />
+            <button
+              className="md:hidden p-2"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
+            >
+              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
         {menuOpen && (
