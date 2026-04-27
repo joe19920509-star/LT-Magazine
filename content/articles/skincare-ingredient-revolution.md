@@ -5,7 +5,7 @@ category: "Lab to Market"
 excerpt: "外泌体、PDRN、丝素蛋白、siRNA——谁在改写皮肤生意的底层逻辑？从成分堆砌到机理设计，护肤品定价权正在被重新定义。"
 author: "LT Magazine"
 readTime: "12 min read"
-coverImage: "/articles/images/article-006-cover.jpg"
+coverImage: "/articles/images/article-006-cover.png"
 column: "Lab to Market"
 ---
 
