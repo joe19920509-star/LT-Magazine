@@ -12,6 +12,7 @@ export default function AuthPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [subscribeNewsletter, setSubscribeNewsletter] = useState(true)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
@@ -63,6 +64,14 @@ export default function AuthPage() {
         if (signUpError) {
           setError('注册失败：' + signUpError.message)
         } else {
+          // Subscribe to newsletter if checked
+          if (subscribeNewsletter) {
+            await fetch('/api/newsletter/subscribe', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, name })
+            })
+          }
           setSuccess('注册成功！请查收验证邮件')
           setTimeout(() => setIsLogin(true), 2000)
         }
@@ -87,12 +96,17 @@ export default function AuthPage() {
         </div>
 
         <div className="bg-white rounded-xl shadow-sm p-8">
-          {(error || success) && (
-            <div className={`mb-6 p-4 rounded-lg flex items-start gap-3 ${
-              success ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
-            }`}>
-              {success ? <CheckCircle size={20} className="flex-shrink-0 mt-0.5" /> : <AlertCircle size={20} className="flex-shrink-0 mt-0.5" />}
-              <p className="text-sm">{success || error}</p>
+          {success && (
+            <div className="mb-6 p-4 bg-green-50 text-green-800 rounded-lg flex items-start gap-3">
+              <CheckCircle size={20} className="flex-shrink-0 mt-0.5" />
+              <p className="text-sm">{success}</p>
+            </div>
+          )}
+
+          {error && !success && (
+            <div className="mb-6 p-4 bg-red-50 text-red-800 rounded-lg flex items-start gap-3">
+              <AlertCircle size={20} className="flex-shrink-0 mt-0.5" />
+              <p className="text-sm">{error}</p>
             </div>
           )}
 
@@ -137,6 +151,21 @@ export default function AuthPage() {
               </div>
             )}
 
+            {!isLogin && (
+              <div className="flex items-start gap-3 pt-2">
+                <input
+                  type="checkbox"
+                  id="newsletter"
+                  checked={subscribeNewsletter}
+                  onChange={(e) => setSubscribeNewsletter(e.target.checked)}
+                  className="mt-1 w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
+                />
+                <label htmlFor="newsletter" className="text-sm text-muted cursor-pointer">
+                  订阅 Newsletter，新文章第一时间通知我
+                </label>
+              </div>
+            )}
+
             <button type="submit" disabled={loading}
               className="w-full bg-primary text-white py-3 rounded-lg font-heading font-semibold hover:bg-primary/90 transition-colors text-sm disabled:opacity-50">
               {loading ? '处理中...' : isLogin ? '登录' : '注册'}
@@ -150,6 +179,14 @@ export default function AuthPage() {
               {isLogin ? '立即注册' : '登录'}
             </button>
           </p>
+
+          {isLogin && (
+            <p className="text-center text-sm mt-4">
+              <Link href="/auth/forgot-password" className="text-muted hover:text-primary transition-colors">
+                忘记密码？
+              </Link>
+            </p>
+          )}
         </div>
       </div>
     </div>

@@ -1,135 +1,82 @@
 import Link from "next/link";
 
-export const metadata = {
-  title: "LT Launch Issue | LTMagazine",
-  description: "LT Magazine 首期发布：Follow Science, Find Money",
-};
-
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-light">
-      {/* Hero */}
-      <div className="bg-dark text-white py-24">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <span className="text-primary font-heading font-bold text-sm tracking-widest uppercase mb-4 block">
-            LT Magazine · Launch Issue
-          </span>
-          <h1 className="font-heading font-bold text-4xl md:text-6xl mb-6 leading-tight">
-            Follow Science.<br />Find Money.
-          </h1>
-          <p className="text-white/70 text-lg max-w-xl mx-auto leading-relaxed">
-            科技商业深度媒体。追踪前沿趋势，拆解商业逻辑，<br />
-            只写值得花时间的内容。
-          </p>
-          <p className="text-white/40 text-sm mt-4">2026 年 4 月 21 日首发</p>
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <section className="max-w-4xl mx-auto px-4 py-16 md:py-24">
+        <h1 className="font-serif font-bold text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-8 leading-tight">
+          LT Magazine
+        </h1>
+        <p className="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
+          从实验室到市场，是这个时代最重要的叙事。
+        </p>
+      </section>
+
+      {/* Editor's Note */}
+      <section className="max-w-4xl mx-auto px-4 pb-16">
+        <div className="border-t-2 border-black pt-12">
+          <h2 className="font-serif text-sm font-bold tracking-[0.2em] uppercase text-gray-500 mb-4">
+            Editor's Note
+          </h2>
+          <h3 className="font-serif font-bold text-2xl md:text-3xl text-gray-900 mb-8">
+            我们为什么需要一本讲「从实验室到市场」的杂志
+          </h3>
+          <div className="text-gray-700 leading-relaxed space-y-6">
+            <p className="font-serif italic text-lg text-gray-600">
+              主编说 · LT Magazine
+            </p>
+            <p>
+              三年前我从媒体去做投资。不是转行，是去看看钱到底怎么想的。
+            </p>
+            <p>
+              看了三年，看明白了：科学家和投资人，说的是两种语言。一个讲分子，一个讲回报。中间隔着CRO、临床、监管、IPO——一条长长的路，没人专门讲过。
+            </p>
+            <p>
+              也看烦了。BP里全是数据，没有故事。路演的PPT丑得让我想哭。最可怕的是，好项目死在路上，不是因为科学不行，是因为没人知道怎么把它讲成有人愿意听的故事。
+            </p>
+            <p>
+              所以我回来做媒体。
+            </p>
+            <p>
+              <strong>LT Magazine 不做科普，不做财经。</strong>我们只做一件事：把从实验室到市场的路，讲成一个好故事。
+            </p>
+            <p>
+              Fast & Slow、Long Term & Short Term、Lab to Market——三个栏目，三种节奏。快的时候追热点，慢的时候做深度。短看这周发生了什么，长看十年后什么值钱。
+            </p>
+            <p>
+              我们做这本杂志，是因为相信：科学值得被好好讲述。而钱，只会流向那些被讲好的故事。
+            </p>
+          </div>
+          {/* Signature */}
+          <div className="mt-12 pt-6 border-t border-gray-200">
+            <p className="font-bold text-xl text-gray-900">
+              Follow Science, Find Money.
+            </p>
+            <p className="font-serif italic text-xl text-gray-700 mt-4" style={{ fontFamily: "'Noto Serif SC', 'STSong', serif" }}>
+              Jon Zhou
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-16">
-        {/* What is LT */}
-        <section className="mb-16">
-          <h2 className="font-heading font-bold text-2xl mb-6 flex items-center gap-3">
-            <span className="w-8 h-0.5 bg-primary inline-block" />
-            我们是什么
+      {/* Subscribe CTA */}
+      <section className="bg-black text-white py-16 md:py-20">
+        <div className="max-w-2xl mx-auto px-4 text-center">
+          <h2 className="font-serif font-bold text-2xl md:text-3xl mb-4">
+            加入 LT Magazine
           </h2>
-          <div className="bg-white rounded-xl p-8 shadow-sm space-y-4">
-            <p className="text-body text-lg leading-relaxed">
-              LT Magazine 是一家科技商业深度媒体。我们相信，科技进步和商业创新是推动这个世界最重要的两股力量——而它们的交汇点，往往是最大机会的所在地。
-            </p>
-            <p className="text-body text-lg leading-relaxed">
-              我们不为流量写东西。每篇文章都经过深度研究，每个观点都有数据和逻辑支撑。我们写的是我们自己愿意花时间读的内容。
-            </p>
-          </div>
-        </section>
-
-        {/* Columns */}
-        <section className="mb-16">
-          <h2 className="font-heading font-bold text-2xl mb-6 flex items-center gap-3">
-            <span className="w-8 h-0.5 bg-primary inline-block" />
-            三个栏目
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                slug: "lab-to-market",
-                name: "Lab to Market",
-                desc: "科技从实验室到商业化的完整链路。投资逻辑、创业机会、技术落地。",
-              },
-              {
-                slug: "long-term-short-term",
-                name: "Long Term & Short Term",
-                desc: "长期趋势与短期信号的交叉分析。帮助你在噪音中分辨方向。",
-              },
-              {
-                slug: "fast-slow",
-                name: "Fast & Slow",
-                desc: "快速反应的热点解读，配合深度慢思考。快中有慢，慢中有快。",
-              },
-            ].map((col) => (
-              <Link
-                key={col.slug}
-                href={`/category/${col.slug}`}
-                className="bg-white rounded-xl p-6 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1 block"
-              >
-                <h3 className="font-heading font-bold text-dark text-lg mb-2">
-                  {col.name}
-                </h3>
-                <p className="text-body text-sm leading-relaxed">{col.desc}</p>
-                <span className="inline-block mt-4 text-primary text-sm font-heading font-semibold">
-                  阅读 →
-                </span>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        {/* Values */}
-        <section className="mb-16">
-          <h2 className="font-heading font-bold text-2xl mb-6 flex items-center gap-3">
-            <span className="w-8 h-0.5 bg-primary inline-block" />
-            我们的立场
-          </h2>
-          <div className="bg-white rounded-xl p-8 shadow-sm">
-            <ul className="space-y-4">
-              {[
-                "我们写我们真正相信的东西，不是甲方要求我们写的。",
-                "数据 > 观点。我们相信数字，不相信直觉。",
-                "不追逐热点。热点来了我们问的是：为什么现在会发生这件事？",
-                "原创报道优先。如果引用，必标来源。",
-                "写给愿意动脑子的读者。不喂结论，只给方法。",
-              ].map((item, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <span className="text-primary font-heading font-bold mt-0.5">{i + 1}.</span>
-                  <span className="text-body">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        {/* Contact */}
-        <section className="bg-dark text-white rounded-xl p-8">
-          <h2 className="font-heading font-bold text-2xl mb-6 flex items-center gap-3">
-            <span className="w-8 h-0.5 bg-primary inline-block" />
-            联系我们 & 投稿
-          </h2>
-          <div className="space-y-3 text-white/80 mb-6">
-            <p>
-              <strong className="text-white">商务合作：</strong> joe19920509@gmail.com
-            </p>
-            <p>
-              <strong className="text-white">投稿邮箱：</strong> joe19920509@gmail.com
-            </p>
-            <p>
-              <strong className="text-white">网址：</strong> LTMagazine.com
-            </p>
-          </div>
-          <p className="text-white/40 text-sm">
-            如果你有科技商业领域的一手报道、深度分析或独特视角，欢迎联系我们。好的故事值得被更多人看到。
+          <p className="text-white/60 mb-8">
+            订阅获取最新文章和深度分析
           </p>
-        </section>
-      </div>
+          <Link
+            href="/auth"
+            className="inline-flex items-center gap-2 bg-white text-black px-8 py-4 font-medium text-sm tracking-wider hover:bg-white/90 transition-colors"
+          >
+            立即订阅 →
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
