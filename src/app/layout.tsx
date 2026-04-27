@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Oswald, Merriweather } from "next/font/google";
+import { Playfair_Display, Lora } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/lib/auth-context";
 
-const oswald = Oswald({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-oswald",
+  variable: "--font-playfair",
   display: "swap",
 });
 
-const merriweather = Merriweather({
+const lora = Lora({
   subsets: ["latin"],
-  weight: ["300", "400", "700"],
-  variable: "--font-merriweather",
+  weight: ["400", "500", "700"],
+  variable: "--font-lora",
   display: "swap",
 });
 
@@ -29,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className={`${oswald.variable} ${merriweather.variable}`}>
-      <body className="font-serif antialiased">
+    <html lang="zh-CN" className={`${playfair.variable} ${lora.variable}`}>
+      <body className="font-serif antialiased bg-white text-black">
         <AuthProvider>
           <Header />
           <main>{children}</main>
