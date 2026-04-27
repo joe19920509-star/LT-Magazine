@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { getAllArticles, getArticleBySlug, markdownToHtml } from "@/lib/articles";
 import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import { ContentGate } from "@/components/ContentGate";
-import { ViewCounter } from "@/components/ViewCounter";
 
 const siteUrl = 'https://ltmagazine.com';
 
@@ -179,7 +178,6 @@ export default async function ArticlePage({
           <span className="flex items-center gap-1.5">
             <Clock size={14} /> {article.readTime || "10 min read"}
           </span>
-          <ViewCounter slug={slug} />
         </div>
       </div>
 
