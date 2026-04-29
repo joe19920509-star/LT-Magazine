@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getAllArticles, getArticleBySlug, markdownToHtml } from "@/lib/articles";
 import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import { ContentGate } from "@/components/ContentGate";
+import { ShareSection } from "@/components/ShareSection";
 
 const siteUrl = 'https://ltmagazine.com';
 
@@ -34,6 +35,7 @@ export async function generateMetadata({
       url: `${siteUrl}/articles/${article.slug}`,
       title: article.title,
       description: article.excerpt,
+      siteName: "LTMagazine",
       publishedTime: article.date,
       modifiedTime: article.date,
       authors: [article.author || "LT Magazine"],
@@ -56,6 +58,10 @@ export async function generateMetadata({
     },
     alternates: {
       canonical: `${siteUrl}/articles/${article.slug}`,
+    },
+    other: {
+      "weixin:timeline_title": article.title,
+      "weixin:timeline_desc": article.excerpt,
     },
   };
 }
@@ -184,6 +190,15 @@ export default async function ArticlePage({
       {/* Article Body - WSJ newspaper style */}
       <div className="max-w-3xl mx-auto px-4 py-8">
         <ContentGate previewContent={previewContent} fullContent={fullContent} />
+      </div>
+
+      {/* 分享区块 */}
+      <div className="max-w-3xl mx-auto px-4">
+        <ShareSection
+          title={article.title}
+          url={`${siteUrl}/articles/${article.slug}`}
+          coverImage={article.coverImage}
+        />
       </div>
 
       {/* CTA - WSJ style */}

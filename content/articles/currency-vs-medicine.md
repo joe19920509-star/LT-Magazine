@@ -5,7 +5,7 @@ category: "Fast & Slow"
 excerpt: "227元，三盒止咳药。是人民币不值钱了，还是药真的变贵了？两个问题，听起来像同一个答案。但它们不是。"
 author: "LT Magazine"
 readTime: "10 min read"
-coverImage: "/articles/images/article-005-cover.png"
+coverImage: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=1200"
 column: "Fast & Slow"
 ---
 

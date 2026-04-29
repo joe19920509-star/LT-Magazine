@@ -6,7 +6,6 @@ import { Menu, X, Search } from "lucide-react";
 import { AuthButton } from "@/components/AuthButton";
 
 const NAV_CATEGORIES = [
-  { label: "Home", href: "/" },
   { label: "Launch Issue", href: "/launch-issue" },
   { label: "Long Term & Short Term", href: "/category/long-term-short-term" },
   { label: "Fast & Slow", href: "/category/fast-slow" },
@@ -18,97 +17,94 @@ export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b-2 border-black">
-      {/* Top bar - WSJ masthead style */}
-      <div className="border-b border-gray-300">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between py-2 text-xs text-muted">
-            <div className="flex items-center gap-4">
-              <span>Monday, April 27, 2026</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <AuthButton />
-            </div>
-          </div>
-        </div>
-      </div>
+    <header className="bg-black text-white sticky top-0 z-50 border-b border-white/10">
+      {/* Top bar */}
+      <div className="bg-black">
+        <div className="max-w-[1800px] mx-auto px-4 md:px-8">
+          <div className="flex items-center justify-between h-14 md:h-16">
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2">
+              <span className="font-serif font-bold text-2xl md:text-3xl tracking-wider text-white">
+                LT
+              </span>
+            </Link>
 
-      {/* Main header */}
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between py-4">
-          {/* Logo - WSJ style masthead */}
-          <Link href="/" className="group">
-            <h1 className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-black hover:text-primary transition-colors">
-              LT Magazine
-            </h1>
-            <p className="text-[10px] text-muted tracking-widest uppercase mt-0.5">
-              From Lab to Market
-            </p>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {NAV_CATEGORIES.map((cat, index) => (
-              <div key={cat.href} className="flex items-center">
-                {index > 0 && <span className="text-gray-300 mx-2">|</span>}
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-8">
+              {NAV_CATEGORIES.map((cat) => (
                 <Link
+                  key={cat.href}
                   href={cat.href}
-                  className="text-xs font-medium tracking-wide uppercase hover:text-primary transition-colors py-2"
+                  className="text-xs font-medium tracking-widest uppercase hover:text-primary transition-colors"
                 >
                   {cat.label}
                 </Link>
-              </div>
-            ))}
-          </nav>
+              ))}
+              <Link
+                href="/about"
+                className="text-xs font-medium tracking-widest uppercase hover:text-primary transition-colors"
+              >
+                About
+              </Link>
+            </nav>
 
-          {/* Right actions */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setSearchOpen(!searchOpen)}
-              className="p-2 hover:text-primary transition-colors"
-              aria-label="Search"
-            >
-              <Search size={18} />
-            </button>
-            <button
-              className="lg:hidden p-2"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
-            >
-              {menuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            {/* Right actions */}
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setSearchOpen(!searchOpen)}
+                className="p-2 hover:text-primary transition-colors"
+                aria-label="Search"
+              >
+                <Search size={18} />
+              </button>
+              <AuthButton />
+              <button
+                className="lg:hidden p-2"
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Toggle menu"
+              >
+                {menuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
           </div>
         </div>
+
+        {/* Search bar */}
+        {searchOpen && (
+          <div className="border-t border-white/10 py-3 px-4">
+            <div className="max-w-2xl mx-auto">
+              <input
+                type="search"
+                placeholder="Search..."
+                className="w-full bg-white/10 border border-white/20 rounded px-4 py-2 text-sm placeholder:text-white/50 focus:outline-none focus:border-white/50"
+                autoFocus
+              />
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* Search bar */}
-      {searchOpen && (
-        <div className="border-t border-gray-200 py-4 px-4 bg-gray-50">
-          <div className="max-w-xl mx-auto">
-            <input
-              type="search"
-              placeholder="Search articles..."
-              className="w-full bg-white border border-gray-300 rounded px-4 py-3 text-sm focus:outline-none focus:border-black"
-              autoFocus
-            />
-          </div>
-        </div>
-      )}
 
       {/* Mobile Navigation */}
       {menuOpen && (
-        <nav className="lg:hidden border-t border-gray-200 bg-white">
-          <div className="px-4 py-4 flex flex-col">
+        <nav className="lg:hidden bg-black border-t border-white/10">
+          <div className="px-4 py-4 flex flex-col gap-3">
             {NAV_CATEGORIES.map((cat) => (
               <Link
                 key={cat.href}
                 href={cat.href}
-                className="text-sm font-medium tracking-wide uppercase hover:text-primary transition-colors py-3 border-b border-gray-100"
+                className="text-xs font-medium tracking-widest uppercase hover:text-primary transition-colors py-2 border-b border-white/10"
                 onClick={() => setMenuOpen(false)}
               >
                 {cat.label}
               </Link>
             ))}
+            <Link
+              href="/about"
+              className="text-xs font-medium tracking-widest uppercase hover:text-primary transition-colors py-2 border-b border-white/10"
+              onClick={() => setMenuOpen(false)}
+            >
+              About
+            </Link>
           </div>
         </nav>
       )}
