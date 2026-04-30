@@ -5,8 +5,8 @@ import { useAuth } from '@/lib/auth-context'
 import { useRouter } from 'next/navigation'
 import {
   Users, Globe, BarChart3, PieChart as PieChartIcon,
-  FileText, TrendingUp, MapPin, Gender, Calendar,
-  RefreshCw, ExternalLink, Lock, AlertCircle, CheckCircle
+  FileText, TrendingUp, MapPin, RefreshCw, ExternalLink,
+  AlertCircle, CheckCircle
 } from 'lucide-react'
 
 // Types
@@ -279,7 +279,7 @@ export default function AdminDashboard() {
 
                 <div className="bg-white rounded-xl p-6 border border-gray-200">
                   <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Gender size={16} className="text-gray-400" />
+                    <PieChartIcon size={16} className="text-gray-400" />
                     性别比例
                   </h3>
                   <GenderPieChart data={stats.users.byGender} />
@@ -364,7 +364,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className="text-3xl font-bold text-primary mt-2">
                           {stats.articles.topArticle.total_views.toLocaleString()}
-                          <span className="text-sm font-normal text-gray-500 ml-1}>次浏览</span>
+                          <span className="text-sm font-normal text-gray-500 ml-1">次浏览</span>
                         </div>
                       </div>
                     </div>
