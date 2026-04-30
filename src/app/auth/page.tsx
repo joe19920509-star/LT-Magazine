@@ -60,9 +60,16 @@ export default function AuthPage() {
           setTimeout(() => router.push('/'), 1000)
         }
       } else {
-        const { error: signUpError } = await signUp(email, password, name)
-        if (signUpError) {
-          setError('注册失败：' + signUpError.message)
+        // Use new signup API with profile and geolocation
+        const signUpRes = await fetch('/api/auth/signup-with-profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, name })
+        })
+        const signUpData = await signUpRes.json()
+        
+        if (!signUpRes.ok) {
+          setError('注册失败：' + (signUpData.error || '未知错误'))
         } else {
           // Subscribe to newsletter if checked
           if (subscribeNewsletter) {
