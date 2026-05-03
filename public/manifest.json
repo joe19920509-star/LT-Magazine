@@ -1,7 +1,7 @@
 {
-  "name": "LT Magazine",
-  "short_name": "LT Mag",
-  "description": "连接科技与商业的桥梁",
+  "name": "LT 财经",
+  "short_name": "LT 财经",
+  "description": "深度财经与科技商业；内容源自 LT Magazine",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

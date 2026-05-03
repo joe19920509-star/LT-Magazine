@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import {
   Users, Globe, BarChart3, PieChart as PieChartIcon,
   FileText, TrendingUp, MapPin, RefreshCw, ExternalLink,
-  AlertCircle, CheckCircle
+  AlertCircle, Mail, Activity
 } from 'lucide-react'
 
 // Types
@@ -17,6 +17,15 @@ interface StatsData {
     byProvince: Record<string, number>
     byGender: Record<string, number>
     byAgeGroup: Record<string, number>
+    active: {
+      totalAuthUsers: number
+      last7Days: number
+      last30Days: number
+      neverSignedIn: number
+    }
+  }
+  newsletter: {
+    activeSubscribers: number
   }
   articles: {
     todayTotalViews: number
@@ -30,7 +39,7 @@ interface StatsData {
 // Chart components
 function GenderPieChart({ data }: { data: Record<string, number> }) {
   const colors = { male: '#3B82F6', female: '#EC4899', other: '#8B5CF6', unknown: '#9CA3AF' }
-  const labels = { male: '男', female: '女', other: '其他' }
+  const labels: Record<string, string> = { male: '男', female: '女', other: '其他', unknown: '未填写' }
 
   const total = Object.values(data).reduce((a, b) => a + b, 0) || 1
 
@@ -40,7 +49,7 @@ function GenderPieChart({ data }: { data: Record<string, number> }) {
         {Object.entries(data).map(([key, value]) => (
           <div key={key} className="flex items-center gap-1.5 text-xs">
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: colors[key as keyof typeof colors] || colors.unknown }} />
-            <span className="text-gray-600">{labels[key as keyof typeof labels] || key}: {value}</span>
+            <span className="text-gray-600">{labels[key] || key}: {value}</span>
           </div>
         ))}
       </div>
@@ -131,8 +140,13 @@ export default function AdminDashboard() {
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch('/api/admin/stats')
-      if (!res.ok) throw new Error('获取数据失败')
+      const res = await fetch('/api/admin/stats', { credentials: 'same-origin' })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(
+          typeof body?.error === 'string' ? body.error : '获取数据失败'
+        )
+      }
       const data = await res.json()
       setStats(data)
       setLastRefresh(new Date())
@@ -154,25 +168,30 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
+      <header className="bg-wsj-navy text-white border-b border-white/10 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
-                <span className="text-white font-bold text-sm">LT</span>
+              <div className="w-8 h-8 bg-wsj-gold text-wsj-navy rounded flex items-center justify-center font-ui font-bold text-xs">
+                LT
               </div>
-              <h1 className="font-heading font-bold text-xl">后台看版</h1>
+              <div>
+                <h1 className="font-heading font-bold text-lg leading-tight">数据看板</h1>
+                <p className="font-ui text-[10px] uppercase tracking-widest text-white/60">
+                  LT 财经 · Analytics
+                </p>
+              </div>
             </div>
             <div className="flex items-center gap-4">
               {lastRefresh && (
-                <span className="text-xs text-gray-400">
+                <span className="text-xs text-white/50 font-ui">
                   更新于 {lastRefresh.toLocaleTimeString('zh-CN')}
                 </span>
               )}
               <button
                 onClick={fetchStats}
                 disabled={loading}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-600 hover:text-gray-900 disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-ui text-white/80 hover:text-white disabled:opacity-50"
               >
                 <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
                 刷新
@@ -180,7 +199,8 @@ export default function AdminDashboard() {
               <a
                 href="/"
                 target="_blank"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-600 hover:text-gray-900"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-ui text-white/80 hover:text-white"
               >
                 <ExternalLink size={14} />
                 查看网站
@@ -205,15 +225,51 @@ export default function AdminDashboard() {
         ) : stats ? (
           <>
             {/* Summary Cards */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
               <div className="bg-white rounded-xl p-5 border border-gray-200">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Users size={20} className="text-blue-600" />
                   </div>
-                  <div className="text-xs text-gray-500">注册用户</div>
+                  <div className="text-xs text-gray-500">注册用户（资料）</div>
                 </div>
                 <div className="text-3xl font-bold text-gray-900">{stats.users.total}</div>
+              </div>
+
+              <div className="bg-white rounded-xl p-5 border border-gray-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center">
+                    <Activity size={20} className="text-teal-600" />
+                  </div>
+                  <div className="text-xs text-gray-500">近 7 日登录</div>
+                </div>
+                <div className="text-3xl font-bold text-gray-900">
+                  {stats.users.active?.last7Days ?? '—'}
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl p-5 border border-gray-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-cyan-100 rounded-lg flex items-center justify-center">
+                    <Activity size={20} className="text-cyan-700" />
+                  </div>
+                  <div className="text-xs text-gray-500">近 30 日登录</div>
+                </div>
+                <div className="text-3xl font-bold text-gray-900">
+                  {stats.users.active?.last30Days ?? '—'}
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl p-5 border border-gray-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
+                    <Mail size={20} className="text-amber-700" />
+                  </div>
+                  <div className="text-xs text-gray-500">Newsletter 订阅</div>
+                </div>
+                <div className="text-3xl font-bold text-gray-900">
+                  {stats.newsletter?.activeSubscribers ?? 0}
+                </div>
               </div>
 
               <div className="bg-white rounded-xl p-5 border border-gray-200">
@@ -233,21 +289,51 @@ export default function AdminDashboard() {
                   <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
                     <FileText size={20} className="text-purple-600" />
                   </div>
-                  <div className="text-xs text-gray-500">今日浏览量</div>
+                  <div className="text-xs text-gray-500">今日浏览（上海时区）</div>
                 </div>
                 <div className="text-3xl font-bold text-gray-900">{stats.articles.todayTotalViews}</div>
               </div>
+            </div>
 
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
               <div className="bg-white rounded-xl p-5 border border-gray-200">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-center gap-3 mb-2">
                   <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
                     <TrendingUp size={20} className="text-orange-600" />
                   </div>
-                  <div className="text-xs text-gray-500">最高浏览量</div>
+                  <div className="text-sm font-medium text-gray-900">历史单篇最高浏览</div>
                 </div>
-                <div className="text-3xl font-bold text-gray-900">
-                  {stats.articles.topArticle?.total_views || 0}
+                <div className="text-2xl font-bold text-gray-900">
+                  {stats.articles.topArticle?.total_views != null
+                    ? stats.articles.topArticle.total_views.toLocaleString()
+                    : 0}
+                  {stats.articles.topArticle?.article_slug ? (
+                    <span className="block text-xs font-normal text-gray-500 mt-1 truncate">
+                      {stats.articles.topArticle.article_slug}
+                    </span>
+                  ) : null}
                 </div>
+              </div>
+
+              <div className="bg-white rounded-xl p-5 border border-gray-200">
+                <h3 className="text-sm font-medium text-gray-900 mb-3 flex items-center gap-2">
+                  <Activity size={16} className="text-gray-400" />
+                  登录活跃（基于 Supabase Auth，共 {stats.users.active?.totalAuthUsers ?? 0} 个账号）
+                </h3>
+                <dl className="grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <dt className="text-gray-500">近 7 日有登录</dt>
+                    <dd className="text-lg font-semibold text-gray-900">{stats.users.active?.last7Days ?? 0}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-gray-500">近 30 日有登录</dt>
+                    <dd className="text-lg font-semibold text-gray-900">{stats.users.active?.last30Days ?? 0}</dd>
+                  </div>
+                  <div className="col-span-2">
+                    <dt className="text-gray-500">从未登录过（仅注册）</dt>
+                    <dd className="text-lg font-semibold text-gray-900">{stats.users.active?.neverSignedIn ?? 0}</dd>
+                  </div>
+                </dl>
               </div>
             </div>
 

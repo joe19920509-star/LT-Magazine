@@ -16,15 +16,15 @@ export function AuthButton() {
   if (user) {
     return (
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1.5">
+        <div className="flex items-center gap-2 bg-white/10 rounded px-3 py-1.5 font-ui">
           <User size={14} />
-          <span className="text-sm font-medium max-w-[120px] truncate">
+          <span className="text-xs font-medium max-w-[120px] truncate">
             {user.user_metadata?.name || user.email?.split('@')[0] || '用户'}
           </span>
         </div>
         <button
           onClick={signOut}
-          className="flex items-center gap-1 text-white/70 hover:text-primary transition-colors text-sm"
+          className="flex items-center gap-1 text-white/70 hover:text-wsj-gold transition-colors text-xs font-ui"
         >
           <LogOut size={14} />
           <span className="hidden sm:inline">退出</span>
@@ -36,7 +36,7 @@ export function AuthButton() {
   return (
     <Link
       href="/auth"
-      className="flex items-center gap-1.5 bg-primary text-white px-4 py-1.5 rounded-full text-sm font-heading font-semibold hover:bg-primary/90 transition-colors"
+      className="flex items-center gap-1.5 bg-wsj-gold text-wsj-navy px-4 py-1.5 rounded text-xs font-ui font-bold uppercase tracking-wide hover:bg-white transition-colors"
     >
       <LogIn size={14} />
       登录

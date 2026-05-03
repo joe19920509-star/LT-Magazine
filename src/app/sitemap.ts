@@ -1,8 +1,9 @@
 import type { MetadataRoute } from 'next';
 import { getAllArticles } from '@/lib/articles';
+import { PUBLIC_SITE_URL } from '@/lib/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://ltmagazine.com';
+  const baseUrl = PUBLIC_SITE_URL;
   
   // Static pages
   const staticPages = [
@@ -10,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.7 },
     { url: `${baseUrl}/launch-issue`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 },
     { url: `${baseUrl}/auth`, lastModified: new Date(), changeFrequency: 'yearly' as const, priority: 0.5 },
+    { url: `${baseUrl}/search`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.3 },
   ];
 
   // Dynamic article pages

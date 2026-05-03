@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Lora } from "next/font/google";
+import { Playfair_Display, Lora, Libre_Franklin } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/lib/auth-context";
+import { PUBLIC_SITE_URL } from "@/lib/site";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -18,23 +19,38 @@ const lora = Lora({
   display: "swap",
 });
 
-const siteUrl = 'https://ltmagazine.com';
+const libreFranklin = Libre_Franklin({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-libre",
+  display: "swap",
+});
+
+const siteUrl = PUBLIC_SITE_URL;
 
 export const metadata: Metadata = {
   title: {
-    default: "LT Magazine — 科技商业深度媒体",
-    template: "%s | LT Magazine",
+    default: "LT 财经 — 深度财经与科技商业",
+    template: "%s | LT 财经",
   },
-  description: "LT Magazine 连接科技与商业，提供 Long Term & Short Term、Fast & Slow、Lab to Market 三大栏目的深度报道，洞察科技趋势与商业变革。",
+  description:
+    "LT 财经（ltmagazine.cn）呈现来自 LT Magazine 的深度稿件与配图，聚焦市场、科技与商业交叉议题；含 Lab to Market、Long Term & Short Term、Fast & Slow 等栏目。",
   keywords: [
-    "LT Magazine", "科技媒体", "商业媒体", "科技商业", "深度报道",
-    "Long Term Short Term", "Fast Slow", "Lab to Market",
-    "科技趋势", "商业洞察", "行业分析", "医药科技", "能源危机",
-    "护肤成分", "功能食品", "抗衰老", "外泌体", "GLP-1",
+    "LT 财经",
+    "ltmagazine.cn",
+    "LT Magazine",
+    "财经",
+    "科技商业",
+    "深度报道",
+    "Long Term Short Term",
+    "Fast Slow",
+    "Lab to Market",
+    "市场",
+    "商业洞察",
   ],
-  authors: [{ name: "LT Magazine", url: siteUrl }],
-  creator: "LT Magazine",
-  publisher: "LT Magazine",
+  authors: [{ name: "LT 财经", url: siteUrl }],
+  creator: "LT 财经",
+  publisher: "LT 财经",
   metadataBase: new URL(siteUrl),
   alternates: {
     canonical: siteUrl,
@@ -43,22 +59,23 @@ export const metadata: Metadata = {
     type: "website",
     locale: "zh_CN",
     url: siteUrl,
-    siteName: "LT Magazine",
-    title: "LT Magazine — 科技商业深度媒体",
-    description: "连接科技与商业的桥梁。Long Term & Short Term、Fast & Slow、Lab to Market 三大栏目，深度报道科技趋势与商业变革。",
+    siteName: "LT 财经",
+    title: "LT 财经 — 深度财经与科技商业",
+    description:
+      "深度财经与科技商业资讯。内容与配图源自 LT Magazine（ltmagazine.com）。",
     images: [
       {
         url: `${siteUrl}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: "LT Magazine",
+        alt: "LT 财经",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "LT Magazine — 科技商业深度媒体",
-    description: "连接科技与商业的桥梁。三大栏目深度报道科技趋势与商业变革。",
+    title: "LT 财经 — 深度财经与科技商业",
+    description: "深度财经与科技商业资讯；内容源自 LT Magazine。",
     images: [`${siteUrl}/og-image.png`],
   },
   robots: {
@@ -87,8 +104,8 @@ const jsonLd = {
       '@type': 'WebSite',
       '@id': `${siteUrl}/#website`,
       url: siteUrl,
-      name: 'LT Magazine',
-      description: '连接科技与商业的桥梁，提供三大栏目的深度报道',
+      name: 'LT 财经',
+      description: '深度财经与科技商业；内容与配图来自 LT Magazine',
       publisher: {
         '@id': `${siteUrl}/#organization`,
       },
@@ -102,7 +119,7 @@ const jsonLd = {
     {
       '@type': 'Organization',
       '@id': `${siteUrl}/#organization`,
-      name: 'LT Magazine',
+      name: 'LT 财经',
       url: siteUrl,
       logo: {
         '@type': 'ImageObject',
@@ -121,7 +138,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className={`${playfair.variable} ${lora.variable}`}>
+    <html
+      lang="zh-CN"
+      className={`${playfair.variable} ${lora.variable} ${libreFranklin.variable}`}
+    >
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

@@ -66,12 +66,17 @@ export default function AuthPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password, name })
         })
-        const signUpData = await signUpRes.json()
-        
+        let signUpData: { error?: string } = {}
+        try {
+          signUpData = await signUpRes.json()
+        } catch {
+          setError('注册失败：服务器返回异常，请稍后重试')
+          return
+        }
+
         if (!signUpRes.ok) {
-          setError('注册失败：' + (signUpData.error || '未知错误'))
+          setError(signUpData.error || '注册失败：未知错误')
         } else {
-          // Subscribe to newsletter if checked
           if (subscribeNewsletter) {
             await fetch('/api/newsletter/subscribe', {
               method: 'POST',
@@ -79,7 +84,7 @@ export default function AuthPage() {
               body: JSON.stringify({ email, name })
             })
           }
-          setSuccess('注册成功！请查收验证邮件')
+          setSuccess('注册成功！请使用邮箱和密码登录')
           setTimeout(() => setIsLogin(true), 2000)
         }
       }

@@ -54,7 +54,7 @@ export function ContentGate({ previewContent, fullContent }: ContentGateProps) {
             登录阅读完整内容
           </h3>
           <p className="text-muted mb-6 max-w-md mx-auto">
-            注册成为 LTMagazine 会员，即可阅读所有文章的完整内容，获取更多科技商业资讯。
+            注册成为 LT 财经会员，即可阅读与 ltmagazine.com 同步的完整正文与配图。
           </p>
           
           <Link 

@@ -9,17 +9,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#C41E3A", // WSJ red
+        primary: "#C41E3A",
         dark: "#111111",
         light: "#FFFFFF",
         body: "#222222",
         muted: "#666666",
         border: "#E0E0E0",
         bg: "#FAFAFA",
+        "wsj-navy": "#0f1729",
+        "wsj-navy-mid": "#1e293b",
+        "wsj-gold": "#c5a572",
       },
       fontFamily: {
         heading: ["var(--font-playfair)", "Georgia", "serif"],
         serif: ["var(--font-lora)", "Georgia", "serif"],
+        ui: ["var(--font-libre)", "Helvetica Neue", "Arial", "sans-serif"],
       },
       columns: {
         '3': '3',

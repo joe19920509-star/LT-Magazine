@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getAllArticles, getArticleBySlug, markdownToHtml } from "@/lib/articles";
 import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import { ContentGate } from "@/components/ContentGate";
+import { resolveMediaUrl, rewriteHtmlAssetUrls } from "@/lib/site";
 
 export async function generateStaticParams() {
   const articles = getAllArticles();
@@ -20,7 +21,7 @@ export async function generateMetadata({
   const article = getArticleBySlug(slug);
   if (!article) return { title: "文章未找到" };
   return {
-    title: `${article.title} | LTMagazine`,
+    title: `${article.title} | LT 财经`,
     description: article.excerpt,
   };
 }
@@ -34,15 +35,21 @@ export default async function ArticlePage({
   const article = getArticleBySlug(slug);
   if (!article) notFound();
 
-  const fullContent = article.content
+  const fullContentRaw = article.content
     ? await markdownToHtml(article.content)
     : article.excerpt;
+  const fullContent = rewriteHtmlAssetUrls(fullContentRaw);
 
   // 生成预览内容（前 300 字或前 2 段）
   const previewText = article.content 
     ? article.content.split(/\n\n/).slice(0, 2).join('\n\n')
     : article.excerpt;
-  const previewContent = await markdownToHtml(previewText);
+  const previewContent = rewriteHtmlAssetUrls(
+    await markdownToHtml(previewText)
+  );
+  const coverSrc = article.coverImage
+    ? resolveMediaUrl(article.coverImage)
+    : null;
 
   return (
     <div className="min-h-screen bg-white">
@@ -59,10 +66,10 @@ export default async function ArticlePage({
       </div>
 
       {/* Hero Image - Full width */}
-      {article.coverImage && (
-        <div className="w-full">
+      {coverSrc && (
+        <div className="w-full border-b border-neutral-200">
           <img
-            src={article.coverImage}
+            src={coverSrc}
             alt={article.title}
             className="w-full h-[50vh] md:h-[60vh] object-cover"
           />
@@ -72,15 +79,16 @@ export default async function ArticlePage({
       {/* Article Header - WSJ style */}
       <div className="max-w-3xl mx-auto px-4 pt-8 md:pt-12">
         {/* Category & Date line */}
-        <div className="flex items-center gap-4 mb-6 pb-4 border-b border-gray-200">
-          <span className="text-[11px] font-bold tracking-[0.15em] uppercase text-primary">
+        <div className="flex flex-wrap items-center gap-4 mb-6 pb-4 border-b border-neutral-200">
+          <span className="font-ui text-[10px] font-bold tracking-[0.2em] uppercase text-primary">
             {article.column || "Article"}
           </span>
-          <span className="text-xs text-muted">{article.category}</span>
+          <span className="font-ui text-xs text-muted uppercase tracking-wide">
+            {article.category}
+          </span>
         </div>
 
-        {/* Headline */}
-        <h1 className="font-heading font-bold text-3xl md:text-5xl text-black mb-6 leading-[1.1] tracking-tight">
+        <h1 className="font-heading font-bold text-3xl md:text-5xl text-wsj-navy mb-6 leading-[1.08] tracking-tight">
           {article.title}
         </h1>
 
@@ -92,9 +100,9 @@ export default async function ArticlePage({
         )}
 
         {/* Byline */}
-        <div className="flex flex-wrap items-center gap-6 text-sm text-muted py-6 border-t border-b border-gray-200 mb-8">
-          <span className="font-medium text-black">
-            {article.author || "LT Magazine"}
+        <div className="flex flex-wrap items-center gap-6 font-ui text-xs uppercase tracking-wide text-muted py-6 border-t border-b border-neutral-200 mb-8">
+          <span className="font-semibold text-wsj-navy">
+            {article.author || "LT 财经"}
           </span>
           <span className="flex items-center gap-1.5">
             <Calendar size={14} /> {article.date}
@@ -117,7 +125,7 @@ export default async function ArticlePage({
             喜欢这篇文章？
           </h3>
           <p className="text-muted mb-6 max-w-md mx-auto">
-            订阅 LT Magazine，每周获取最新科技商业深度报道。
+            订阅 LT 财经，获取与 ltmagazine.com 同步的深度报道与通讯。
           </p>
           <Link
             href="/auth"

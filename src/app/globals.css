@@ -8,8 +8,12 @@
   --color-muted: #666666;
   --color-border: #E0E0E0;
   --color-bg: #FAFAFA;
+  --color-wsj-navy: #0f1729;
+  --color-wsj-navy-mid: #1e293b;
+  --color-wsj-gold: #c5a572;
   --font-heading: var(--font-playfair), Georgia, serif;
   --font-serif: var(--font-lora), Georgia, serif;
+  --font-ui: var(--font-libre), "Helvetica Neue", Arial, sans-serif;
 }
 
 :root {

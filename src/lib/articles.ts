@@ -38,7 +38,7 @@ export function getAllArticles(): Article[] {
         category: data.category || "",
         excerpt: data.excerpt || "",
         coverImage: data.coverImage,
-        author: data.author || "LT Magazine",
+        author: data.author || "LT 财经",
         readTime: data.readTime || "5 min read",
         column: data.column || "",
       } as Article;
@@ -62,7 +62,7 @@ export function getArticleBySlug(slug: string): Article | null {
       category: data.category || "",
       excerpt: data.excerpt || "",
       coverImage: data.coverImage,
-      author: data.author || "LT Magazine",
+      author: data.author || "LT 财经",
       readTime: data.readTime || "5 min read",
       column: data.column || "",
       content,

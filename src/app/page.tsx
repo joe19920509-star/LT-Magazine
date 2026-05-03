@@ -1,41 +1,44 @@
 import Link from "next/link";
 import { getAllArticles, type Article } from "@/lib/articles";
 import { ArrowRight, Clock } from "lucide-react";
+import { resolveMediaUrl } from "@/lib/site";
 
 function FeaturedHero({ article }: { article: Article }) {
+  const img = resolveMediaUrl(article.coverImage);
   return (
-    <section className="border-b-2 border-black">
+    <section className="border-b-2 border-wsj-navy">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-          {/* Main story - 8 columns */}
-          <div className="lg:col-span-8 border-r-0 lg:border-r border-gray-300">
+          <div className="lg:col-span-8 border-r-0 lg:border-r border-neutral-300">
             <Link href={`/articles/${article.slug}`} className="group block">
-              <div className="relative aspect-[16/9] lg:aspect-auto lg:h-full min-h-[400px] overflow-hidden">
+              <div className="relative aspect-[16/9] lg:aspect-auto lg:h-full min-h-[360px] overflow-hidden bg-neutral-100">
                 <img
-                  src={article.coverImage || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200"}
+                  src={img}
                   alt={article.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition duration-500 group-hover:scale-[1.02]"
                 />
               </div>
             </Link>
           </div>
 
-          {/* Side stories - 4 columns */}
-          <div className="lg:col-span-4 flex flex-col">
-            <Link href={`/articles/${article.slug}`} className="group block p-6 border-b border-gray-300 flex-1">
-              <span className="text-[11px] font-bold tracking-[0.15em] uppercase text-primary block mb-3">
-                {article.column || "Featured"}
+          <div className="lg:col-span-4 flex flex-col bg-white">
+            <Link
+              href={`/articles/${article.slug}`}
+              className="group block p-6 lg:p-8 border-b border-neutral-300 flex-1"
+            >
+              <span className="font-ui text-[10px] font-bold tracking-[0.2em] uppercase text-primary block mb-3">
+                {article.column || "封面报道"}
               </span>
-              <h1 className="font-heading font-bold text-2xl md:text-3xl text-black mb-3 leading-tight group-hover:text-primary transition-colors">
+              <h2 className="font-heading font-bold text-2xl md:text-3xl text-wsj-navy mb-3 leading-[1.15] group-hover:text-primary transition-colors">
                 {article.title}
-              </h1>
-              <p className="text-muted text-sm leading-relaxed mb-4 line-clamp-3">
+              </h2>
+              <p className="text-muted text-sm leading-relaxed mb-4 line-clamp-4 font-serif">
                 {article.excerpt}
               </p>
-              <div className="flex items-center gap-3 text-xs text-muted">
+              <div className="flex items-center gap-3 font-ui text-[11px] text-muted uppercase tracking-wide">
                 <span>{article.date}</span>
-                <span>·</span>
-                <span className="flex items-center gap-1">
+                <span className="text-neutral-300">|</span>
+                <span className="inline-flex items-center gap-1">
                   <Clock size={12} />
                   {article.readTime}
                 </span>
@@ -49,32 +52,31 @@ function FeaturedHero({ article }: { article: Article }) {
 }
 
 function ArticleCard({ article }: { article: Article }) {
+  const img = resolveMediaUrl(article.coverImage);
   return (
     <Link href={`/articles/${article.slug}`} className="group block">
       <article className="flex flex-col h-full">
-        {/* Image */}
-        <div className="relative overflow-hidden bg-gray-100 aspect-[4/3] mb-4">
+        <div className="relative overflow-hidden bg-neutral-100 aspect-[4/3] mb-4 border border-neutral-200">
           <img
-            src={article.coverImage || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600"}
+            src={img}
             alt={article.title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         </div>
-        {/* Content */}
         <div className="flex-1 flex flex-col">
-          <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-primary block mb-2">
-            {article.column || "Article"}
+          <span className="font-ui text-[10px] font-bold tracking-[0.18em] uppercase text-primary block mb-2">
+            {article.column || "报道"}
           </span>
-          <h3 className="font-heading font-bold text-lg text-black mb-2 group-hover:text-primary transition-colors leading-tight">
+          <h3 className="font-heading font-bold text-lg text-wsj-navy mb-2 group-hover:text-primary transition-colors leading-snug">
             {article.title}
           </h3>
-          <p className="text-muted text-sm leading-relaxed line-clamp-2 mb-3">
+          <p className="text-muted text-sm leading-relaxed line-clamp-3 mb-3 font-serif">
             {article.excerpt}
           </p>
-          <div className="mt-auto flex items-center gap-3 text-xs text-muted">
+          <div className="mt-auto flex items-center gap-3 font-ui text-[11px] text-muted uppercase tracking-wide">
             <span>{article.date}</span>
-            <span>·</span>
-            <span className="flex items-center gap-1">
+            <span>|</span>
+            <span className="inline-flex items-center gap-1">
               <Clock size={12} />
               {article.readTime}
             </span>
@@ -85,46 +87,17 @@ function ArticleCard({ article }: { article: Article }) {
   );
 }
 
-function ArticleListItem({ article }: { article: Article }) {
+function SectionHeader({ title, en }: { title: string; en?: string }) {
   return (
-    <Link href={`/articles/${article.slug}`} className="group block py-4 border-b border-gray-200">
-      <article className="flex gap-4">
-        {/* Image */}
-        <div className="relative overflow-hidden bg-gray-100 w-24 h-24 flex-shrink-0">
-          <img
-            src={article.coverImage || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200"}
-            alt={article.title}
-            className="w-full h-full object-cover"
-          />
-        </div>
-        {/* Content */}
-        <div className="flex-1 min-w-0">
-          <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-primary block mb-1">
-            {article.column || "Article"}
-          </span>
-          <h3 className="font-heading font-bold text-base text-black group-hover:text-primary transition-colors leading-tight line-clamp-2">
-            {article.title}
-          </h3>
-          <div className="flex items-center gap-3 text-xs text-muted mt-2">
-            <span>{article.date}</span>
-            <span>·</span>
-            <span className="flex items-center gap-1">
-              <Clock size={12} />
-              {article.readTime}
-            </span>
-          </div>
-        </div>
-      </article>
-    </Link>
-  );
-}
-
-function SectionHeader({ title }: { title: string }) {
-  return (
-    <div className="border-b-2 border-black mb-6 pb-2">
-      <h2 className="font-heading font-bold text-xl text-black tracking-tight">
+    <div className="border-b-2 border-wsj-navy mb-6 pb-2 flex items-end justify-between gap-4">
+      <h2 className="font-heading font-bold text-xl text-wsj-navy tracking-tight">
         {title}
       </h2>
+      {en && (
+        <span className="font-ui text-[10px] font-semibold uppercase tracking-[0.2em] text-muted pb-0.5">
+          {en}
+        </span>
+      )}
     </div>
   );
 }
@@ -133,60 +106,73 @@ export default function HomePage() {
   const articles = getAllArticles();
   const featured = articles[0];
   const rest = articles.slice(1);
-
-  // Take first 3 articles for featured row
   const featuredRow = rest.slice(0, 3);
   const gridArticles = rest.slice(3);
 
+  if (!featured) {
+    return (
+      <div className="min-h-[40vh] flex items-center justify-center font-ui text-muted">
+        暂无文章
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section - WSJ front page style */}
       <FeaturedHero article={featured} />
 
-      {/* Three featured stories */}
-      <section className="max-w-7xl mx-auto px-4 py-8 border-b border-gray-200">
-        <SectionHeader title="Latest" />
+      <section className="max-w-7xl mx-auto px-4 py-10 border-b border-neutral-200">
+        <SectionHeader title="最新深度" en="Latest" />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
           {featuredRow.map((article, index) => (
-            <div key={article.slug} className={index < 2 ? "border-r-0 md:border-r border-gray-200 pr-0 md:pr-6" : ""}>
+            <div
+              key={article.slug}
+              className={
+                index < 2
+                  ? "border-r-0 md:border-r border-neutral-200 pr-0 md:pr-8"
+                  : ""
+              }
+            >
               <ArticleCard article={article} />
             </div>
           ))}
         </div>
       </section>
 
-      {/* Two column layout - WSJ newspaper style */}
       {gridArticles.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Main content - 8 columns */}
+        <section className="max-w-7xl mx-auto px-4 py-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
             <div className="lg:col-span-8">
-              <SectionHeader title="More Stories" />
+              <SectionHeader title="更多报道" en="More Stories" />
 
-              {/* Grid of article cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-0">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-10">
                 {gridArticles.map((article, index) => (
-                  <div key={article.slug} className={index % 2 === 0 ? "border-r-0 sm:border-r border-gray-200 pr-0 sm:pr-8" : ""}>
+                  <div
+                    key={article.slug}
+                    className={
+                      index % 2 === 0
+                        ? "border-r-0 sm:border-r border-neutral-200 pr-0 sm:pr-8"
+                        : ""
+                    }
+                  >
                     <ArticleCard article={article} />
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Sidebar - 4 columns */}
-            <div className="lg:col-span-4">
-              <SectionHeader title="Trending" />
+            <aside className="lg:col-span-4">
+              <SectionHeader title="趋势阅读" en="Trending" />
 
-              {/* List of trending articles */}
-              <div className="divide-y divide-gray-200">
-                {gridArticles.slice(0, 4).map((article, index) => (
-                  <div key={article.slug} className="flex gap-3 py-3">
-                    <span className="font-heading font-bold text-3xl text-gray-200 w-8 flex-shrink-0">
+              <div className="divide-y divide-neutral-200 border-t border-neutral-200">
+                {gridArticles.slice(0, 6).map((article, index) => (
+                  <div key={article.slug} className="flex gap-3 py-4">
+                    <span className="font-heading font-bold text-2xl text-neutral-200 w-8 shrink-0 leading-none">
                       {index + 1}
                     </span>
-                    <Link href={`/articles/${article.slug}`} className="group flex-1">
-                      <h4 className="font-heading font-bold text-sm text-black group-hover:text-primary transition-colors leading-tight line-clamp-3">
+                    <Link href={`/articles/${article.slug}`} className="group flex-1 min-w-0">
+                      <h4 className="font-heading font-bold text-sm text-wsj-navy group-hover:text-primary transition-colors leading-snug line-clamp-4">
                         {article.title}
                       </h4>
                     </Link>
@@ -194,87 +180,45 @@ export default function HomePage() {
                 ))}
               </div>
 
-              {/* Newsletter signup */}
-              <div className="mt-8 p-6 bg-gray-50 border border-gray-200">
-                <h3 className="font-heading font-bold text-lg text-black mb-2">
+              <div className="mt-8 p-6 bg-neutral-50 border border-neutral-200">
+                <h3 className="font-heading font-bold text-lg text-wsj-navy mb-1">
                   Newsletter
                 </h3>
-                <p className="text-sm text-muted mb-4">
-                  Get the latest stories delivered to your inbox every week.
+                <p className="font-ui text-xs text-muted mb-4 leading-relaxed uppercase tracking-wide">
+                  每周精选推送 · 与 ltmagazine.com 同源更新
                 </p>
                 <Link
                   href="/auth"
-                  className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 text-xs font-medium tracking-wide uppercase hover:bg-primary transition-colors"
+                  className="inline-flex items-center gap-2 bg-wsj-navy text-white px-5 py-3 font-ui text-[11px] font-bold uppercase tracking-widest hover:bg-wsj-navy-mid transition-colors"
                 >
-                  Subscribe <ArrowRight size={12} />
+                  订阅 <ArrowRight size={12} />
                 </Link>
               </div>
-            </div>
+            </aside>
           </div>
         </section>
       )}
 
-      {/* Newsletter CTA - WSJ black bar style */}
-      <section className="bg-black text-white py-12">
+      <section className="bg-wsj-navy text-white py-12 border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <h2 className="font-heading font-bold text-2xl mb-1">
-                Subscribe to LT Magazine
+              <h2 className="font-heading font-bold text-2xl mb-1 text-white">
+                订阅 LT 财经
               </h2>
-              <p className="text-white/60 text-sm">
-                Join our community of readers. Free newsletter every week.
+              <p className="font-ui text-white/60 text-xs uppercase tracking-widest max-w-md">
+                免费通讯 · 深度稿件与配图与 LT Magazine（ltmagazine.com）同步
               </p>
             </div>
             <Link
               href="/auth"
-              className="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 font-medium text-sm tracking-wider uppercase hover:opacity-90 transition-opacity whitespace-nowrap"
+              className="inline-flex items-center gap-2 bg-wsj-gold text-wsj-navy px-8 py-4 font-ui text-xs font-bold uppercase tracking-widest hover:bg-white transition-colors whitespace-nowrap"
             >
-              Subscribe Now <ArrowRight size={14} />
+              立即订阅 <ArrowRight size={14} />
             </Link>
           </div>
         </div>
       </section>
-
-      {/* Footer - WSJ style */}
-      <footer className="border-t-2 border-black bg-white py-8">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <h4 className="font-heading font-bold text-sm uppercase tracking-wide mb-4">Sections</h4>
-              <ul className="space-y-2 text-sm text-muted">
-                <li><Link href="/category/long-term-short-term" className="hover:text-black">Long Term & Short Term</Link></li>
-                <li><Link href="/category/fast-slow" className="hover:text-black">Fast & Slow</Link></li>
-                <li><Link href="/category/lab-to-market" className="hover:text-black">Lab to Market</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-heading font-bold text-sm uppercase tracking-wide mb-4">About</h4>
-              <ul className="space-y-2 text-sm text-muted">
-                <li><Link href="/about" className="hover:text-black">About Us</Link></li>
-                <li><Link href="/launch-issue" className="hover:text-black">Launch Issue</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-heading font-bold text-sm uppercase tracking-wide mb-4">Account</h4>
-              <ul className="space-y-2 text-sm text-muted">
-                <li><Link href="/auth" className="hover:text-black">Sign In</Link></li>
-                <li><Link href="/auth" className="hover:text-black">Subscribe</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-heading font-bold text-sm uppercase tracking-wide mb-4">Contact</h4>
-              <ul className="space-y-2 text-sm text-muted">
-                <li><Link href="mailto:joe19920509@gmail.com" className="hover:text-black">Email Us</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-200 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="font-heading text-xl font-bold">LT Magazine</div>
-            <p className="text-xs text-muted">© 2026 LT Magazine. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

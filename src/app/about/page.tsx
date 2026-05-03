@@ -6,7 +6,7 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="max-w-4xl mx-auto px-4 py-16 md:py-24">
         <h1 className="font-serif font-bold text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-8 leading-tight">
-          LT Magazine
+          LT 财经
         </h1>
         <p className="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
           从实验室到市场，是这个时代最重要的叙事。
@@ -24,7 +24,7 @@ export default function AboutPage() {
           </h3>
           <div className="text-gray-700 leading-relaxed space-y-6">
             <p className="font-serif italic text-lg text-gray-600">
-              主编说 · LT Magazine
+              主编说 · LT 财经
             </p>
             <p>
               三年前我从媒体去做投资。不是转行，是去看看钱到底怎么想的。
@@ -64,7 +64,7 @@ export default function AboutPage() {
       <section className="bg-black text-white py-16 md:py-20">
         <div className="max-w-2xl mx-auto px-4 text-center">
           <h2 className="font-serif font-bold text-2xl md:text-3xl mb-4">
-            加入 LT Magazine
+            加入 LT 财经
           </h2>
           <p className="text-white/60 mb-8">
             订阅获取最新文章和深度分析

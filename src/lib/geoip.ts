@@ -4,6 +4,7 @@
  * Returns: { country, province, city, ip }
  */
 
+/** Free tier is HTTP-only (see ip-api.com docs); server-side fetch on Vercel supports this. */
 const IP_API_URL = 'http://ip-api.com/json'
 
 export interface GeoLocation {
@@ -22,9 +23,13 @@ export async function getGeoLocation(ip?: string): Promise<GeoLocation | null> {
   try {
     // If no IP provided, try to get from a free endpoint
     // Note: In production, you'd typically use request headers or a proxy
-    const targetIp = ip || ''
-    
-    const response = await fetch(`${IP_API_URL}/${targetIp}?lang=zh`, {
+    const targetIp = (ip || '').trim()
+    // ip-api: omit path segment to query caller IP (on serverless this is the platform egress IP, not the visitor)
+    const path = targetIp && !/^127\.|^10\.|^192\.168\.|^172\.(1[6-9]|2\d|3[01])\./.test(targetIp)
+      ? `/${encodeURIComponent(targetIp)}`
+      : ''
+
+    const response = await fetch(`${IP_API_URL}${path}?lang=zh`, {
       next: { revalidate: 0 } // Don't cache
     })
     
